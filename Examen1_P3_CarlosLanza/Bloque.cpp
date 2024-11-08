@@ -46,5 +46,5 @@ void Bloque::setTiempoEnRomper(const float tiempoEnRomper) {
     this->tiempoEnRomper = tiempoEnRomper;
 }
 void Bloque::mostrarInformacion() {
-    
+    cout << "Material: " << material << ", Durabilidad: " << durabilidad << ", Tiempo en romper: " << tiempoEnRomper;
 }

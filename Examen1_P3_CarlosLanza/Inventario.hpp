@@ -34,9 +34,24 @@ public:
     const vector<Pico*> getPicos();
     const vector<Bloque*> getBloques();
     
+    // metodos para agregar materiales
     void agregarPiedra();
+    void agregarLingoteDeHierro();
+    void agregarDiamante();
+    void agregarPalo();
     
-    void mostrarInformacion();
+    // metodos para picos
+    void crearPicoDePiedra();
+    void crearPicoDeHierro();
+    void crearPicoDeDiamante();
+    void listarPicos();
+    void mejorarPico();
+    
+    // metodos para bloques
+    void listarBloques();
+    void agregarBloque();
+    void romperBloque();
+
 };
 
 #endif /* Inventario_hpp */

@@ -36,28 +36,40 @@ void menu() {
                 continuar = false;
                 break;
             case 1:
+                inventario->agregarPiedra();
                 break;
             case 2:
+                inventario->agregarLingoteDeHierro();
                 break;
             case 3:
+                inventario->agregarDiamante();
                 break;
             case 4:
+                inventario->agregarPalo();
                 break;
             case 5:
+                inventario->crearPicoDePiedra();
                 break;
             case 6:
+                inventario->crearPicoDeHierro();
                 break;
             case 7:
+                inventario->crearPicoDeDiamante();
                 break;
             case 8:
+                inventario->listarPicos();
                 break;
             case 9:
+                inventario->mejorarPico();
                 break;
             case 10:
+                inventario->listarBloques();
                 break;
             case 11:
+                inventario->agregarBloque();
                 break;
             case 12:
+                inventario->romperBloque();
                 break;
             default: cout << "Opción incorrecta, intente de nuevo" << endl;
         }

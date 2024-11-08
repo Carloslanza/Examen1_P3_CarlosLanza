@@ -34,5 +34,5 @@ void Pico::setVida(const int vida) {
     this->vida = vida;
 }
 void Pico::mostrarInformacion() {
-    
+    cout << "Material: " << material << ", Vida: " << vida;
 }
