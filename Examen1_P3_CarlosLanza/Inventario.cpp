@@ -49,15 +49,19 @@ void Inventario::agregarPiedra() {
         cout << "piedras + 1" << endl;
         cout << "Piedras: " << piedras << endl;
     }
+    else
+        cout << "Qué mala suerte! Probabilidad (75%)" << endl;
 }
 void Inventario::agregarLingoteDeHierro() {
     srand(time(NULL));
     int randNum = rand() % 100 + 1;
     if (randNum <= 50) {
         this->lingotesDeHierro++;
-        cout << "hierro + 1" << endl;
+        cout << "hierros + 1" << endl;
         cout << "Hierros: " << lingotesDeHierro << endl;
     }
+    else
+        cout << "Qué mala suerte! Probabilidad (50%)" << endl;
 }
 void Inventario::agregarDiamante() {
     srand(time(NULL));
@@ -67,11 +71,13 @@ void Inventario::agregarDiamante() {
         cout << "diamantes + 1" << endl;
         cout << "Diamantes: " << diamantes << endl;
     }
+    else
+        cout << "Qué mala suerte! Probabilidad (25%)" << endl;
 }
 void Inventario::agregarPalo() {
     if (this->palos <= 9) {
         this->palos++;
-        cout << "palo + 1" << endl;
+        cout << "palos + 1" << endl;
         cout << "Palos: " << palos << endl;
     }
     else
@@ -83,7 +89,7 @@ void Inventario::crearPicoDePiedra() {
         this->palos = this->palos - 2;
         this->piedras = this->piedras - 3;
         this->picos.push_back(new Pico("piedra"));
-        cout "Se ha creado un pico de piedra!" << endl;
+        cout << "Se ha creado un pico de piedra!" << endl;
     }
     else
         cout << "Materiales insuficientes! Palos (2) Piedras (3)" << endl;
@@ -133,8 +139,8 @@ void Inventario::mejorarPico() {
     } while (repetir);
     
     Pico* pico = this->picos[opcion - 1];
-    if (pico->getMaterial() >= "piedra") {
-        if (lingotesDeHierro == 3) {
+    if (pico->getMaterial() == "piedra") {
+        if (lingotesDeHierro >= 3) {
             this->lingotesDeHierro = lingotesDeHierro - 3;
             pico->setMaterial("hierro");
             pico->setVida(250);
@@ -185,26 +191,31 @@ void Inventario::agregarBloque() {
             case 1:
                 if (randNum <= 33) {
                     this->bloques.push_back(new Bloque("obsidiana"));
-                    cout << "obsidiana + 1" << endl;
+                    cout << "bloque de obsidiana + 1" << endl;
                 }
+                else
+                    cout << "Qué mala suerte! Probabilidad (33%)" << endl;
                 break;
             case 2:
                 if (randNum <= 66) {
                     this->bloques.push_back(new Bloque("oro"));
-                    cout << "oro + 1" << endl;
+                    cout << "bloque oro + 1" << endl;
                 }
+                else
+                    cout << "Qué mala suerte! Probabilidad (66%)" << endl;
                 break;
             case 3:
                 if (randNum <= 75) {
                     this->bloques.push_back(new Bloque("carbon"));
-                    cout << "carbón + 1" << endl;
+                    cout << "bloque carbón + 1" << endl;
                 }
+                else
+                    cout << "Qué mala suerte! Probabilidad (75%)" << endl;
                 break;
             default:
                 repetir = true;
                 cout << "Opción inválida, intente de nuevo" << endl;
         }
-        
     } while (repetir);
 }
 void Inventario::romperBloque() {
@@ -224,12 +235,31 @@ void Inventario::romperBloque() {
         cin >> opcionPico;
         cout << endl;
         
-        repetir = (opcionBloque > 0 && opcionBloque <= tamañoBloques) && (opcionPico > 0 && opcionPico <= tamañoPicos) ? false : true;
+        repetir = ((opcionBloque > 0 && opcionBloque <= tamañoBloques) && (opcionPico > 0 && opcionPico <= tamañoPicos)) ? false : true;
         if (repetir)
             cout << "Opción fuera de rango!" << endl;
     } while (repetir);
     
-    Bloque* bloque = this->bloques[opcionBloque];
-    Pico* pico = this->picos[opcionPico];
+    Bloque* bloque = this->bloques[opcionBloque - 1];
+    Pico* pico = this->picos[opcionPico - 1];
+    
+    if (pico->getVida() >= bloque->getDurabilidad()) {
+        float calculoRomperBloque = 0;
+        if (pico->getMaterial() == "piedra")
+            calculoRomperBloque = bloque->getTiempoEnRomper() * 0.15;
+        else if (pico->getMaterial() == "hierro")
+            calculoRomperBloque = bloque->getTiempoEnRomper() * 0.25;
+        else if (pico->getMaterial() == "diamante")
+            calculoRomperBloque = bloque->getTiempoEnRomper() * 0.50;
+        
+        cout << "Se rompió el bloque de " << bloque->getMaterial() << " con el pico de " << pico->getMaterial() << " y vida restante " << pico->getVida() << " en un tiempo de " << bloque->getTiempoEnRomper() - calculoRomperBloque;
+        delete bloque;
+    }
+    else {
+        bloque->setDurabilidad(bloque->getDurabilidad() - pico->getVida());
+        
+        cout << "Se ha roto el pico!" << endl;
+        delete pico;
+    }
     
 }

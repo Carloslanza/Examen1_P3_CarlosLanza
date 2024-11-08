@@ -73,7 +73,7 @@ void menu() {
                 break;
             default: cout << "Opción incorrecta, intente de nuevo" << endl;
         }
-        
+        cout << endl;
     } while (continuar);
 }
 
